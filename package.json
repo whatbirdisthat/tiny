@@ -1,0 +1,29 @@
+{
+  "name": "tiny",
+  "version": "1.0.0",
+  "description": "A tiny workflow",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whatbirdisthat/tiny-workflow.git"
+  },
+  "keywords": [
+    "tiny",
+    "workflow"
+  ],
+  "author": "DW",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/whatbirdisthat/tiny-workflow/issues"
+  },
+  "homepage": "https://github.com/whatbirdisthat/tiny-workflow#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-sass": "^2.3.2",
+    "vinyl-source-stream": "^1.1.0"
+  }
+}
