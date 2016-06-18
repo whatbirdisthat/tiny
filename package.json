@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/whatbirdisthat/tiny-workflow#readme",
   "devDependencies": {
+    "browserify": "^13.0.1",
     "concurrently": "^2.1.0",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
