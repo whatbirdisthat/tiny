@@ -27,8 +27,10 @@
   "devDependencies": {
     "concurrently": "^2.1.0",
     "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0",
     "gulp-htmlmin": "^2.0.0",
     "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.6.0",
     "lite-server": "^2.2.0",
     "vinyl-source-stream": "^1.1.0"
   }

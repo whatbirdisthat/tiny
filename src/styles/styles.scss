@@ -1,0 +1,11 @@
+@import 'variables.scss';
+
+body {
+  background-color: darken($very-dark-green, 40);
+}
+h1.maroon-h1 {
+  color: $mostly-dark-red;
+}
+.testing {
+  width: percentage(5/7);
+}
