@@ -14,6 +14,11 @@ gulp.task('html', function () {
 
 gulp.task('styles', function () {
     return gulp.src('src/styles/**/*.scss')
-        .pipe(sass())
+        .pipe(sass().on('error', sass.logError))
         .pipe(gulp.dest('dist/css'));
+});
+
+gulp.task('watch', function () {
+    gulp.watch('src/styles/**/*.scss', ['styles']);
+    gulp.watch('src/**/*.html', ['html']);
 });

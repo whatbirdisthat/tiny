@@ -4,7 +4,7 @@
   "description": "A tiny workflow",
   "main": "index.js",
   "scripts": {
-    "start": "cd dist && tsc && concurrently \"tsc -w\" \"lite-server\" ",
+    "start": "cd dist && tsc && concurrently \"tsc -w\" \"lite-server\" \"gulp watch\"",
     "lite": "lite-server",
     "tsc:w": "tsc -w",
     "tsc": "tsc",
