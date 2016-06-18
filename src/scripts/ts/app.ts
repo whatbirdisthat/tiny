@@ -5,5 +5,7 @@
     // var dat = require('dat.gui');
 
 export class App {
-
+constructor() {
+    console.log('APP HAS ?BEEN CONSTRUCTED!@');
+}
 }
