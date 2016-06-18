@@ -3,20 +3,20 @@
 An unimpressive demo of modern front end tek.
 
 # Languages
-* HTML5
-* CSS3
-    * SASS
+* HTML5 ✓
+* CSS3 ✓
+    * SASS ✓
 * Javascript
     * Typescript
 
 # Package Managers
-* NPM
-* Bower
+* NPM ✓
+* Bower ✓
 
 # Bundlers
-* Gulp
+* Gulp ✓
     * Browserify
-    * HTMLmin
+    * HTMLmin ✓
 * System.js
 * Webpack
 
@@ -33,3 +33,4 @@ An unimpressive demo of modern front end tek.
 * tether (<-- Bootstrap)
 * moment.js (<-- ng2-Bootstrap)
 * Modernizr
+
