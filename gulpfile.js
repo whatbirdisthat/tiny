@@ -12,7 +12,6 @@ var source = require('vinyl-source-stream');
 var uglify = require('gulp-uglify');
 var buffer = require('gulp-buffer');
 var gutil = require('gulp-util');
-var assign = require('lodash.assign');
 
 var paths = {
     pages: ['src/**/*.html']

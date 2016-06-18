@@ -4,7 +4,6 @@
   "description": "A tiny workflow",
   "main": "index.js",
   "scripts": {
-    "watchify": " \"watchify src/scripts/js/main.js -o dist/js/bundle.js --verbose --debug\"",
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" \"gulp watch\"",
     "lite": "lite-server",
     "tsc:w": "tsc -w",
