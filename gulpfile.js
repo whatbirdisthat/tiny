@@ -13,9 +13,6 @@ var source = require('vinyl-source-stream');
 var uglify = require('gulp-uglify');
 var buffer = require('gulp-buffer');
 var gutil = require('gulp-util');
-// var merge2 = require('merge2');
-// var wrap = require('gulp-wrap');
-var addsrc = require('gulp-add-src');
 var insert = require('gulp-insert');
 var fs = require('fs')
 
@@ -61,20 +58,15 @@ gulp.task('scripts', function () {
         plugin: [watchify]
     });
 
-    // var jquery_stream = gulp.src('node_modules/jquery/dist/jquery.min.js').pipe(buffer());
-    // var bootstrap_stream = gulp.src('node_modules/bootstrap/dist/js/bootstrap.min.js').pipe(buffer());
-
     var jquery_content = fs.readFileSync("node_modules/jquery/dist/jquery.min.js", "utf8");
     var tether_content = fs.readFileSync("node_modules/tether/dist/js/tether.min.js", "utf8");
     var bootstrap_content = fs.readFileSync("node_modules/bootstrap/dist/js/bootstrap.min.js", "utf8");
-
 
     return b.transform("babelify", {presets: ["es2015"]})
         .on('error', handleError)
         .bundle()
         .on('error', handleError)
         .pipe(source('bundle.js'))
-        // .pipe(wrap('(function () { var define = undefined; <%=contents%> ; })();'))
         .pipe(buffer())
         // .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
         // .pipe(uglify()).on('error', gutil.log)
@@ -88,13 +80,8 @@ gulp.task('scripts', function () {
         .pipe(insert.transform(function(contents, file){
             return contents + "\n" + bootstrap_content
         }))
-        // .pipe(addsrc('./node_modules/jquery/dist/jquery.js'))
-        // .pipe(addsrc('./node_modules/bootstrap/dist/js/bootstrap.js'))
         .pipe(uglify()).on('error', gutil.log)
         .pipe(gulp.dest('dist/js'));
-
-    // var js_stream = merge2(jquery_stream, bootstrap_stream, es6_stream);
-    // return js_stream.pipe(concat('bundle.js')).pipe(gulp.dest('dist/js'));
 
 });
 
