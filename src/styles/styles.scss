@@ -1,7 +1,8 @@
+@import 'carousel.scss';
 @import 'variables.scss';
 
 body {
-  background-color: darken($very-dark-green, 55);
+  background-color: darken($very-dark-green, 25);
 }
 h1.maroon-h1 {
   color: $mostly-dark-red;
