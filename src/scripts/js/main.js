@@ -1,5 +1,8 @@
-var bodyBlue = require('./bodyColour');
+import bodyColour from './bodyColour';
+bodyColour('#fa903d');
+console.log("ASGADSG");
 
-bodyBlue('#fa903d');
-
+import jQuery from 'jquery';
+var $ = jQuery;
+$('h1.maroon-h1').text("XX TINY XX");
 
