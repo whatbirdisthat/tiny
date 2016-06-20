@@ -22,14 +22,11 @@ function handleError(theError) {
 gulp.task('scripts', function () {
     var b = browserify({
         entries: [
-            // './node_modules/jquery/dist/jquery.js',
-            // './node_modules/bootstrap/dist/js/bootstrap.js',
             './src/scripts/js/main.js'
         ],
-        debug: true,
+        debug: true, // injects source map into bundle.js
         cache: {},
-        packageCache: {}//,
-//        plugin: [watchify]
+        packageCache: {}
     });
 
     var jquery_content = fs.readFileSync("node_modules/jquery/dist/jquery.min.js", "utf8");
@@ -42,9 +39,7 @@ gulp.task('scripts', function () {
         .on('error', handleError)
         .pipe(source('bundle.js'))
         .pipe(buffer())
-        // .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
-        // .pipe(uglify()).on('error', gutil.log)
-        // .pipe(sourcemaps.write('.'))
+        .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
         .pipe(insert.transform(function (contents, file) {
             return contents + "\n" + jquery_content
         }))
@@ -55,6 +50,7 @@ gulp.task('scripts', function () {
             return contents + "\n" + bootstrap_content
         }))
         .pipe(uglify()).on('error', handleError)
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist/js'));
 
 });
