@@ -27,6 +27,11 @@ An unimpressive demo of modern front end tek.
 
 # Frameworks
 * [Angular2](https://angular.io/)
+
+        # Install typings:
+        typings install -–global -–save dt~core-js
+        typings install -–global -–save dt~node
+
 * [Bootstrap4](http://getbootstrap.com/) ✓
 * [ng2-bootstrap](https://github.com/valor-software/ng2-bootstrap)
 * [jQuery](https://jquery.com/) ✓

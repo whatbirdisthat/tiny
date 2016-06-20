@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var sass = require('gulp-sass'); // https://github.com/sass/node-sass#options
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
+var cleanCSS = require('gulp-clean-css');
 
 
 gulp.task('styles', function () {
@@ -14,6 +15,7 @@ gulp.task('styles', function () {
         .pipe(sass({outputStyle: 'compressed', sourceComments: 'map'})
             .on('error', sass.logError))
         .pipe(concat('styles.css'))
+        .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist/css'));
 });

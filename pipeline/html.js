@@ -3,11 +3,13 @@ var htmlmin = require('gulp-htmlmin');
 
 
 var paths = {
-    pages: ['src/**/*.html']
+    pages: [
+        'src/**/*.html'
+    ]
 };
 
 gulp.task('html', function () {
-    return gulp.src(paths.pages)
+    gulp.src(paths.pages)
         .pipe(htmlmin({collapseWhitespace: true}))
-        .pipe(gulp.dest('dist'))
+        .pipe(gulp.dest('dist'));
 });

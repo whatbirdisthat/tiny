@@ -5,6 +5,7 @@ var source = require('vinyl-source-stream');
 var browserify = require('browserify');
 var watchify = require('watchify');
 var babelify = require('babelify');
+// var tsify = require('tsify');
 
 var sourcemaps = require('gulp-sourcemaps');
 var uglify = require('gulp-uglify');
@@ -22,48 +23,58 @@ function handleError(theError) {
     this.emit('end');
 }
 
-gulp.task('vendor', function() {
+gulp.task('jslib', function () {
 
+    var run_task = false;
+    try {
+        if (fs.statSync('./dist/lib/lib.js').isFile()) {
+            gutil.log('to reinstall js libs, run `gulp clean && gulp build`');
+            // (gutil.noop(call_back));
+            return;
+        }
+    } catch (e) {
+        if (e.message != "ENOENT: no such file or directory, stat './dist/lib/lib.js'") {
+            gutil.log(e);
+        }
+    }
+
+    gutil.log('libjs not found, installing js libs');
     var vendorfiles = [
-        'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/tether/dist/js/tether.min.js',
-        'node_modules/bootstrap/dist/js/bootstrap.min.js'
+        './node_modules/jquery/dist/jquery.min.js',
+        './node_modules/tether/dist/js/tether.min.js',
+        './node_modules/bootstrap/dist/js/bootstrap.min.js'
     ];
 
     return gulp.src(vendorfiles)
-        .pipe(concat('vendor.js'))
-        .pipe(gulp.dest('dist/js'));
+        .pipe(concat('lib.js'))
+        .pipe(gulp.dest('dist/lib'));
 
 });
 
-gulp.task('scripts', function () {
-
-    // var t = browserify({
-    //     entries: [
-    //         'src/scripts/ts/app.ts'
-    //     ],
-    //     debug: false,
-    //     plugin: [tsify]
-    // });
+gulp.task('js', ['jslib'], function () {
 
     var b = browserify({
         entries: [
-            'src/scripts/js/main.js'
+            './src/js/main.js'
         ],
         debug: true, // injects source map into bundle.js
         cache: {},
         packageCache: {}
     });
+    // b.ignore('jquery');
 
-    var b_src_as_js = b.transform("babelify", {presets: ["es2015"]})
+    return b.transform("babelify", {presets: ["es2015"]})
         .on('error', handleError)
         .bundle()
         .on('error', handleError)
-        .pipe(source('bundle.js'))
+        .pipe(source('scripts.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist/js'));
 
-    return b_src_as_js;
+});
+
+gulp.task('jsclean', function (call_back) {
+    return del('dist/js', call_back);
 });
