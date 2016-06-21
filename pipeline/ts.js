@@ -1,25 +1,49 @@
 const gulp = require("gulp");
 const del = require("del");
-const tsc = require("gulp-typescript");
 const sourcemaps = require('gulp-sourcemaps');
-const tsProject = tsc.createProject("tsconfig.json");
 const tslint = require('gulp-tslint');
 var gutil = require('gulp-util');
 var fs = require('fs');
 
-/**
- * Lint all custom TypeScript files.
- */
+var browserify = require("browserify");
+var tsify = require("tsify");
+var source = require("vinyl-source-stream");
+
+const tsc = require("gulp-typescript");
+const tsProject = tsc.createProject("tsconfig.json");
+
+//"tslint"
+gulp.task("ts", ["tslib", "copy-systemjs-config"], () => {
+
+    // let tsResult = gulp.src("src/**/*.ts")
+    //     .pipe(sourcemaps.init())
+    //     .pipe(tsc(tsProject));
+    // return tsResult.js
+    //     .pipe(sourcemaps.write("."))
+    //     .pipe(gulp.dest("dist"));
+
+    return browserify({
+        basedir: '.',
+        debug: true,
+        entries: ['src/app/main.ts'],
+        cache: {},
+        packageCache: {}
+    })
+        .plugin(tsify)
+        .bundle()
+        .pipe(source('bundle.js'))
+        .pipe(gulp.dest("dist"));
+
+
+});
+
+
 gulp.task('tslint', () => {
     return gulp.src("src/**/*.ts")
         .pipe(tslint())
         .pipe(tslint.report('prose'));
 });
 
-
-/**
- * Copy all required libraries into build directory.
- */
 gulp.task("tslib", () => {
 
     try {
@@ -50,17 +74,4 @@ gulp.task("tslib", () => {
 
 gulp.task('copy-systemjs-config', function () {
     return gulp.src('src/systemjs.config.js').pipe(gulp.dest('dist/app'))
-});
-
-/**
- * Compile TypeScript sources and create sourcemaps in build directory.
- */
-//"tslint"
-gulp.task("ts", ["tslib", "copy-systemjs-config"], () => {
-    let tsResult = gulp.src("src/**/*.ts")
-        .pipe(sourcemaps.init())
-        .pipe(tsc(tsProject));
-    return tsResult.js
-        .pipe(sourcemaps.write("."))
-        .pipe(gulp.dest("dist"));
 });

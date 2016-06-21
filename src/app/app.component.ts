@@ -1,16 +1,17 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {AboutComponent} from "./about/components/about.components";
 
-import {Routes, RouterLink, RouterOutlet, ROUTER_DIRECTIVES} from '@angular/router';
+import { RouterLink, RouterOutlet, RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
 
 @Component({
     selector: 'app',
     templateUrl: 'app/app.html',
-    directives : [AboutComponent, RouterLink, RouterOutlet, ROUTER_DIRECTIVES]
+    directives : [ROUTER_DIRECTIVES, RouterOutlet, RouterLink],
+    providers: [AboutComponent]
 })
 
-@Routes([
-    {path: '/about', component: AboutComponent}
+@RouteConfig([
+    { path: '/about', component: TheAppComponent, name: 'About' }
 ])
 
 export class TheAppComponent {

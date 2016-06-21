@@ -1,14 +1,9 @@
 import {Component} from "@angular/core";
 import {OnInit} from "@angular/core";
-import {ROUTER_DIRECTIVES} from "@angular/router-deprecated";
 
 @Component({
-    templateUrl: './app/about/components/about.html',
-    directives : [ROUTER_DIRECTIVES],
+    templateUrl: './app/about/components/about.html'
 })
 export class AboutComponent implements OnInit {
-
-    ngOnInit() {
-
-    }
+    ngOnInit() {}
 }

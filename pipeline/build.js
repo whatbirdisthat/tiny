@@ -7,7 +7,7 @@ gulp.task('build', task_dependencies, function () {
     gutil.log('Finished build finished.');
 });
 
-gulp.task('watch', function () {
+gulp.task('watch', task_dependencies, function () {
     gulp.watch('src/js/**/*.js', ['js']);
     gulp.watch('src/app/**/*.ts', ['ts']);
     gulp.watch('src/styles/**/*.scss', ['styles']);

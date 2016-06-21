@@ -1,19 +1,18 @@
 {
   "compilerOptions": {
     "outDir": "dist/app",
-    "module": "system",
+    "module": "commonjs",
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": false,
-    "noImplicitAny": false,
-    "target": "es6",
+    "noImplicitAny": true,
+    "target": "es5",
     "sourceMap": true
   },
   "exclude": [
     "gulpfile.ts",
     "node_modules",
-    "typings",
     "dist"
   ]
 }

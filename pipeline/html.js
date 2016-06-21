@@ -9,7 +9,7 @@ var paths = {
 };
 
 gulp.task('html', function () {
-    gulp.src(paths.pages)
+    return gulp.src(paths.pages)
         .pipe(htmlmin({collapseWhitespace: true}))
         .pipe(gulp.dest('dist'));
 });
