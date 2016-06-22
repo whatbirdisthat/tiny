@@ -6,6 +6,7 @@ var gutil = require('gulp-util');
 var fs = require('fs');
 
 var browserify = require("browserify");
+var babelify = require("babelify");
 var tsify = require("tsify");
 var source = require("vinyl-source-stream");
 
@@ -13,7 +14,8 @@ const tsc = require("gulp-typescript");
 const tsProject = tsc.createProject("tsconfig.json");
 
 //"tslint"
-gulp.task("ts", ["tslib", "copy-systemjs-config"], () => {
+//["tslib", "copy-systemjs-config"],
+gulp.task("ts", () => {
 
     // let tsResult = gulp.src("src/**/*.ts")
     //     .pipe(sourcemaps.init())
@@ -29,10 +31,11 @@ gulp.task("ts", ["tslib", "copy-systemjs-config"], () => {
         cache: {},
         packageCache: {}
     })
-        .plugin(tsify)
+        .plugin(tsify, { target: 'es5' })
+        .transform(babelify, { extensions: [ '.ts', '.js' ] })
         .bundle()
         .pipe(source('bundle.js'))
-        .pipe(gulp.dest("dist"));
+        .pipe(gulp.dest("dist/js"));
 
 
 });
@@ -66,7 +69,7 @@ gulp.task("tslib", () => {
             'reflect-metadata/Reflect.js',
             'rxjs/**',
             'zone.js/dist/**',
-            '@angular/**'
+            // '@angular/**'
         ], {cwd: "node_modules/**"}/* Glob required here. */)
         .pipe(gulp.dest("dist/lib"));
 

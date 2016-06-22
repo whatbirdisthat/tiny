@@ -1,7 +1,7 @@
-var gulp = require('gulp');
-var DIST_FOLDER = 'dist';
+import {Tasks, Paths} from './pipeline';
+import gulp from 'gulp';
+import del from 'del';
 
-var del = require('del');
-gulp.task('clean', function (call_back) {
-    return del(DIST_FOLDER, call_back);
+gulp.task(Tasks.clean, function (call_back) {
+    return del(Paths.dist, call_back);
 });

@@ -1,10 +1,7 @@
-import $ from 'jquery';
-// import jQuery from 'jquery';
 
 export default function bodyColour(colour) {
 
-    // var $ = jQuery;
-    $('h1.maroon-h1').text("XX TINY XX");
+    $('h1.maroon-h1').text("xXX TINY XXx");
     console.log("BODY-COLOUR: " + colour);
-    // theBody.style.backgroundColor = colour;
+
 }

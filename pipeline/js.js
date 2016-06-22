@@ -1,58 +1,49 @@
-var gulp = require('gulp');
+"use strict";
 
-var fs = require('fs');
-var source = require('vinyl-source-stream');
-var browserify = require('browserify');
-var watchify = require('watchify');
-var babelify = require('babelify');
-// var tsify = require('tsify');
+import {Tasks} from './pipeline';
 
-var sourcemaps = require('gulp-sourcemaps');
-var uglify = require('gulp-uglify');
-var buffer = require('gulp-buffer');
-var gutil = require('gulp-util');
-var insert = require('gulp-insert');
-var concat = require('gulp-concat');
+import gulp from 'gulp';
+
+import fs from 'fs';
+import source from 'vinyl-source-stream';
+import browserify from 'browserify';
+
+import babelify from 'babelify';
+import del from 'del';
+import sourcemaps from 'gulp-sourcemaps';
+import uglify from 'gulp-uglify';
+import buffer from 'gulp-buffer';
+import gutil from 'gulp-util';
+import insert from 'gulp-insert';
+import concat from 'gulp-concat';
 
 
-//TODO: just print the error message and source code snippet
-// we really don't need a stacktrace telling us
-// the location in gutil where this came from...)
 function handleError(theError) {
-    gutil.log(theError);
+    // gutil.log(theError);
+    console.log(theError.message);
     this.emit('end');
 }
 
-gulp.task('jslib', function () {
+gulp.task('libs', function () {
 
-    var run_task = false;
-    try {
-        if (fs.statSync('./dist/lib/lib.js').isFile()) {
-            gutil.log('to reinstall js libs, run `gulp clean && gulp build`');
-            // (gutil.noop(call_back));
-            return;
-        }
-    } catch (e) {
-        if (e.message != "ENOENT: no such file or directory, stat './dist/lib/lib.js'") {
-            gutil.log(e);
-        }
-    }
+    // var jquery_contents = fs.readFileSync('./node_modules/jquery/dist/jquery.js', 'utf8');
+    var tether_contents = fs.readFileSync('./node_modules/tether/dist/js/tether.js', 'utf8');
+    var bootstrap_contents = fs.readFileSync('./node_modules/bootstrap/dist/js/bootstrap.js', 'utf8');
 
-    gutil.log('libjs not found, installing js libs');
-    var vendorfiles = [
-        './node_modules/jquery/dist/jquery.min.js',
-        './node_modules/tether/dist/js/tether.min.js',
-        './node_modules/bootstrap/dist/js/bootstrap.min.js'
-    ];
-
-    return gulp.src(vendorfiles)
+    return gulp.src('./node_modules/jquery/dist/jquery.js')
+        .pipe(insert.transform(function(contents, file) {
+            return contents + tether_contents;
+        }))
+        .pipe(insert.transform(function(contents, file) {
+            return contents + bootstrap_contents;
+        }))
+        .pipe(uglify())
         .pipe(concat('lib.js'))
-        .pipe(gulp.dest('dist/lib'));
+        .pipe(gulp.dest('dist/js/lib'));
 
 });
 
-gulp.task('js', ['jslib'], function () {
-
+gulp.task('app', ['libs'], function () {
     var b = browserify({
         entries: [
             './src/js/main.js'
@@ -61,20 +52,26 @@ gulp.task('js', ['jslib'], function () {
         cache: {},
         packageCache: {}
     });
-    // b.ignore('jquery');
-
-    return b.transform("babelify", {presets: ["es2015"]})
+    
+    return b.transform(babelify, {presets: ["es2015"]})
         .on('error', handleError)
         .bundle()
         .on('error', handleError)
         .pipe(source('scripts.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
+        .pipe(uglify())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist/js'));
+
+})
+
+gulp.task(Tasks.js, ['app'], function () {
+
+    console.log('oh dear')
 
 });
 
 gulp.task('jsclean', function (call_back) {
-    return del('dist/js', call_back);
+    return del('dist/lib/lib.js', call_back);
 });

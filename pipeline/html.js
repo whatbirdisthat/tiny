@@ -1,15 +1,10 @@
-var gulp = require('gulp');
-var htmlmin = require('gulp-htmlmin');
+import {Paths, Tasks} from './pipeline';
 
+import gulp from 'gulp';
+import htmlmin from 'gulp-htmlmin';
 
-var paths = {
-    pages: [
-        'src/**/*.html'
-    ]
-};
-
-gulp.task('html', function () {
-    return gulp.src(paths.pages)
+gulp.task(Tasks.html, function () {
+    return gulp.src(Paths.html)
         .pipe(htmlmin({collapseWhitespace: true}))
         .pipe(gulp.dest('dist'));
 });
