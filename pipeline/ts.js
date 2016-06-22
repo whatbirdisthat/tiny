@@ -14,36 +14,36 @@ import buffer  from 'gulp-buffer';
 import {handleError} from './pipeline';
 import jsmin from 'gulp-jsmin';
 
-gulp.task(Tasks.ts, ['systemjs'], () => {
-
-    return gulp.src('src/app/**/*.ts')
-        .pipe(gulp.dest('dist/app'));
+gulp.task(Tasks.ts, ['tslib'], () => {
+//    ['systemjs'],
+    // return gulp.src('src/app/**/*.ts')
+    //     .pipe(gulp.dest('dist/app'));
 
 
 //['tslib'],
-//     return browserify({
-//         basedir: '.',
-//         debug: true,
-//         entries: ['src/app/main.ts'],
-//         cache: {},
-//         packageCache: {}
-//     })
-//         .plugin(tsify, {target: 'es5'})
-//         .transform(babelify, {extensions: ['.ts', '.js']})
-//         .on('error', handleError)
-//         .bundle()
-//         .on('error', handleError)
-//         .pipe(source('bundle.js'))
-//         .pipe(buffer())
-//         .pipe(sourcemaps.init())
-//         // .pipe(uglify())
-//         .pipe(sourcemaps.write('.'))
-//         .pipe(gulp.dest("dist/js"));
-//
+    return browserify({
+        basedir: '.',
+        debug: true,
+        entries: ['src/app/main.ts'],
+        cache: {},
+        packageCache: {}
+    })
+        .plugin(tsify, {target: 'es5'})
+        .transform(babelify, {extensions: ['.ts', '.js']})
+        .on('error', handleError)
+        .bundle()
+        .on('error', handleError)
+        .pipe(source('bundle.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init())
+        // .pipe(uglify())
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest("dist/js"));
+
 
 });
 
-gulp.task('systemjs', function() {
+gulp.task('systemjs', function () {
 
     return gulp.src('src/systemjs.config.js')
         .pipe(gulp.dest('dist'));
