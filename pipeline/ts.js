@@ -63,11 +63,11 @@ gulp.task("tslib", () => {
     gutil.log('installing ts / ng2 libs');
     return gulp.src(
         [
-            'es6-shim/es6-shim.min.js',
-            'systemjs/dist/system-polyfills.js',
-            'systemjs/dist/system.src.js',
+            // 'es6-shim/es6-shim.min.js',
+            // 'systemjs/dist/system-polyfills.js',
+            // 'systemjs/dist/system.src.js',
             'reflect-metadata/Reflect.js',
-            'rxjs/**',
+            // 'rxjs/**',
             'zone.js/dist/**',
             // '@angular/**'
         ], {cwd: "node_modules/**"}/* Glob required here. */)
