@@ -28,9 +28,23 @@ gulp.task('show-help', function () {
 
 })
 
+
+export function handleError(theError) {
+    // gutil.log(theError);
+    console.log(theError.message);
+    this.emit('end');
+}
+
 export var Paths = {
+    json: [
+        'test/**/*.json'
+    ],
     html: [
         'src/**/*.html'
+    ],
+    tsLibs: [
+        'reflect-metadata/Reflect.js',
+        'zone.js/dist/**/*.js'
     ],
     dist: 'dist'
 }
@@ -41,6 +55,8 @@ export var Tasks = {
     css: 'css',
     html: 'html',
     js: 'js',
+    json: 'json',
+    svg: 'svg',
     ts: 'ts',
     watch: 'watch'
 }
@@ -51,10 +67,11 @@ var TaskDescriptions = [
     {name: Tasks.css, text: "Builds the CSS from sass sources."},
     {name: Tasks.html, text: "Builds the HTML from sources."},
     {name: Tasks.js, text: "Builds the JS from sources."},
+    {name: Tasks.json, text: "Deploys static reference data JSON from sources."},
+    {name: Tasks.svg, text: "Builds the SVG from sources."},
     {name: Tasks.ts, text: "Builds the TS from sources."},
     {name: Tasks.watch, text: "Watches js/css/html files and rebuilds on change."}
 ]
 
-// ts
-export var BuildChain = [Tasks.js, Tasks.ts, Tasks.css, Tasks.html];
+export var BuildChain = [Tasks.js, Tasks.ts, Tasks.svg, Tasks.css, Tasks.html, Tasks.json];
 

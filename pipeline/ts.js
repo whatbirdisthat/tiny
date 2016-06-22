@@ -1,5 +1,6 @@
-import { Tasks } from './pipeline';
+import {Tasks, Paths} from './pipeline';
 import gulp from 'gulp';
+import del from "del";
 import sourcemaps from 'gulp-sourcemaps';
 import tslint from 'gulp-tslint';
 import gutil from 'gulp-util';
@@ -10,7 +11,8 @@ import tsify  from "tsify";
 import source  from "vinyl-source-stream";
 import uglify  from 'gulp-uglify';
 import buffer  from 'gulp-buffer';
-
+import {handleError} from './pipeline';
+import jsmin from 'gulp-jsmin';
 
 gulp.task(Tasks.ts, ['tslib'], () => {
 
@@ -21,13 +23,15 @@ gulp.task(Tasks.ts, ['tslib'], () => {
         cache: {},
         packageCache: {}
     })
-        .plugin(tsify, { target: 'es5' })
-        .transform(babelify, { extensions: [ '.ts', '.js' ] })
+        .plugin(tsify, {target: 'es5'})
+        .transform(babelify, {extensions: ['.ts', '.js']})
+        .on('error', handleError)
         .bundle()
+        .on('error', handleError)
         .pipe(source('bundle.js'))
         .pipe(buffer())
         .pipe(sourcemaps.init())
-        .pipe(uglify())
+        // .pipe(uglify())
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest("dist/js"));
 
@@ -54,11 +58,15 @@ gulp.task("tslib", () => {
     }
 
     gutil.log('installing ts / ng2 libs');
-    return gulp.src(
-        [
-            'reflect-metadata/Reflect.js',
-            'zone.js/dist/**',
-        ], {cwd: "node_modules/**"})
-        .pipe(gulp.dest("dist/js/lib"));
 
+    return gulp
+        .src(Paths.tsLibs, {cwd: 'node_modules/**'})
+        .pipe(uglify())
+        // .pipe(jsmin())
+        .pipe(gulp.dest("dist/js/lib"))
+
+});
+
+gulp.task('clean-tslib', function (call_back) {
+    return del('dist/js/lib', call_back);
 });

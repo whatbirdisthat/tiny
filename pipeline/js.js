@@ -1,13 +1,11 @@
 "use strict";
 
-import {Tasks} from './pipeline';
+import {Tasks, handleError} from './pipeline';
 
 import gulp from 'gulp';
-
 import fs from 'fs';
 import source from 'vinyl-source-stream';
 import browserify from 'browserify';
-
 import babelify from 'babelify';
 import del from 'del';
 import sourcemaps from 'gulp-sourcemaps';
@@ -16,13 +14,6 @@ import buffer from 'gulp-buffer';
 import gutil from 'gulp-util';
 import insert from 'gulp-insert';
 import concat from 'gulp-concat';
-
-
-function handleError(theError) {
-    // gutil.log(theError);
-    console.log(theError.message);
-    this.emit('end');
-}
 
 gulp.task('libs', function () {
 
@@ -67,9 +58,7 @@ gulp.task('app', ['libs'], function () {
 })
 
 gulp.task(Tasks.js, ['app'], function () {
-
-    console.log('oh dear')
-
+    gutil.log('Javascripts complete.')
 });
 
 gulp.task('jsclean', function (call_back) {
