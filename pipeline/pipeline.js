@@ -1,43 +1,12 @@
 import gulp from 'gulp'
 
-gulp.task('show-help', function () {
-
-    console.log(
-        '\n',
-        String.fromCharCode(0x1B) + "[4mPipeline tasks for the *tiny* project.",
-        String.fromCharCode(0x1B) + "[0m",
-        '\n'
-    );
-
-    for (var eachTask in Tasks) {
-        var description = TaskDescriptions.find(function (it) {
-            return it.name == eachTask
-        });
-        console.log(
-            String.fromCharCode(0x1B) + "[33m  "
-            +
-            eachTask
-            + String.fromCharCode(0x1B) + "[0m\n"
-            + ' '
-            + String.fromCharCode(0x1B) + "[34m    "
-            + description.text
-            + String.fromCharCode(0x1B) + "[0m"
-        );
-    }
-    console.log('\n');
-
-})
-
-
-export function handleError(theError) {
-    // gutil.log(theError);
-    console.log(theError.message);
-    this.emit('end');
-}
-
 export var Paths = {
     json: [
-        'src/test/**/*.json'
+        'src/**/*.json',
+        // 'src/test/**/*.json'
+    ],
+    js: [
+        'src/systemjs.config.js'
     ],
     html: [
         'src/**/*.html'
@@ -73,5 +42,39 @@ var TaskDescriptions = [
     {name: Tasks.watch, text: "Watches js/css/html files and rebuilds on change."}
 ]
 
-export var BuildChain = [Tasks.js, Tasks.ts, Tasks.svg, Tasks.css, Tasks.html, Tasks.json];
+export var BuildChain = [Tasks.ts, Tasks.js, Tasks.svg, Tasks.css, Tasks.html, Tasks.json];
+
+gulp.task('show-help', function () {
+
+    console.log(
+        '\n',
+        String.fromCharCode(0x1B) + "[4mPipeline tasks for the *tiny* project.",
+        String.fromCharCode(0x1B) + "[0m",
+        '\n'
+    );
+
+    for (var eachTask in Tasks) {
+        var description = TaskDescriptions.find(function (it) {
+            return it.name == eachTask
+        });
+        console.log(
+            String.fromCharCode(0x1B) + "[33m  "
+            +
+            eachTask
+            + String.fromCharCode(0x1B) + "[0m\n"
+            + ' '
+            + String.fromCharCode(0x1B) + "[34m    "
+            + description.text
+            + String.fromCharCode(0x1B) + "[0m"
+        );
+    }
+    console.log('\n');
+
+})
+
+export function handleError(theError) {
+    // gutil.log(theError);
+    console.log(theError.message);
+    this.emit('end');
+}
 

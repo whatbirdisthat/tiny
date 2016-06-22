@@ -1,7 +1,5 @@
-
-import {Model} from "./DisplayModel";
-
-export const MODELS : Model[] = [
+"use strict";
+exports.Models = [
     {
         name: "Product1",
         image2d: "P_ONE.svg",

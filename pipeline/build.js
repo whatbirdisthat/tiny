@@ -8,7 +8,7 @@ gulp.task(Tasks.build, BuildChain, function () {
 
 gulp.task(Tasks.watch, BuildChain, function () {
     gulp.watch('src/svg/**/*.svg', [Tasks.svg]);
-    gulp.watch('src/js/**/*.js', [Tasks.js]);
+    gulp.watch('src/**/*.js', [Tasks.js]);
     gulp.watch('test/**/*.json', [Tasks.json]);
     gulp.watch('src/app/**/*.ts', [Tasks.ts]);
     gulp.watch('src/styles/**/*.scss', [Tasks.css]);

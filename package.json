@@ -4,9 +4,9 @@
   "description": "A tiny workflow",
   "main": "index.js",
   "scripts": {
-    "ts_start": "tsc && concurrently \"tsc -w\" \"lite-server\" \"gulp watch\"",
+    "start": "tsc && concurrently \"tsc -w\" \"lite-server\" \"gulp watch\"",
     "watch": "gulp watch",
-    "start": "concurrently \"lite-server\" \"gulp watch\"",
+    "no_ts_start": "concurrently \"lite-server\" \"gulp watch\"",
     "lite": "lite-server",
     "tsc:w": "tsc -w",
     "typings": "typings",

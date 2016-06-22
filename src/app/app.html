@@ -11,18 +11,18 @@
     <pre>
         {{ displayModels }}
     </pre>
-    <!--<ul class="well">-->
-        <!--<li *ngFor="let model of displayModels">-->
-            <!--<div class="container table">-->
-                <!--<div class="row">-->
-                    <!--<h1> {{ model.description.title }} </h1>-->
-                <!--</div>-->
-                <!--<div class="row">-->
-                    <!--<pre>{{ model.description.byline }}</pre>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</li>-->
-    <!--</ul>-->
+    <ul class="well">
+        <li *ngFor="model of displayModels | async">
+            <div class="container table">
+                <div class="row">
+                    <h1> {{ model.description.title }} </h1>
+                </div>
+                <div class="row">
+                    <pre>{{ model.description.byline }}</pre>
+                </div>
+            </div>
+        </li>
+    </ul>
 </section>
 <hr/>
 <button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="Tooltip on bottom">
