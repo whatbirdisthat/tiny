@@ -1,12 +1,9 @@
 import { Tasks } from './pipeline';
 import gulp from 'gulp';
-
 import sourcemaps from 'gulp-sourcemaps';
-
 import tslint from 'gulp-tslint';
 import gutil from 'gulp-util';
 import fs from 'fs';
-
 import browserify  from "browserify";
 import babelify  from "babelify";
 import tsify  from "tsify";
@@ -59,14 +56,9 @@ gulp.task("tslib", () => {
     gutil.log('installing ts / ng2 libs');
     return gulp.src(
         [
-            // 'es6-shim/es6-shim.min.js',
-            // 'systemjs/dist/system-polyfills.js',
-            // 'systemjs/dist/system.src.js',
             'reflect-metadata/Reflect.js',
-            // 'rxjs/**',
             'zone.js/dist/**',
-            // '@angular/**'
-        ], {cwd: "node_modules/**"}/* Glob required here. */)
+        ], {cwd: "node_modules/**"})
         .pipe(gulp.dest("dist/js/lib"));
 
 });
