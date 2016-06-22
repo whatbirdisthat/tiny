@@ -1,27 +1,37 @@
-import {Component} from '@angular/core';
-import {AboutComponent} from "./about/components/about.components";
-
-import { RouterLink, RouterOutlet, RouteConfig, ROUTER_DIRECTIVES } from '@angular/router-deprecated';
+import {Component, OnInit} from '@angular/core';
+import {Model} from "./data/DisplayModel";
+import {ModelService} from "./data/ModelService";
 
 @Component({
     selector: 'app',
     templateUrl: 'app/app.html',
-    directives : [ROUTER_DIRECTIVES, RouterOutlet, RouterLink],
-    providers: [AboutComponent]
+    providers: [ModelService]
 })
 
-@RouteConfig([
-    { path: '/about', component: TheAppComponent, name: 'About' }
-])
+export class AppComponent implements OnInit {
+    homeLink:string;
+    name1:string;
+    name2:string;
+    someText:string[];
+    displayModels:Model[];
 
+    error:any;
 
-export class TheAppComponent {
-    name1: string;
-    name2: string;
-    someText: string[];
-    constructor() {
-        this.name1 = 'ONE';
-        this.name2 = 'TWO';
+    constructor(private modelService: ModelService) {
+        this.homeLink = "HOME";
+        this.name1 = 'Angle ONE';
+        this.name2 = 'Angle TWO';
         this.someText = ['some text', 'some more text'];
+    }
+
+    getModels() {
+        this.modelService
+            .getModels()
+            .then(models => this.displayModels = models)
+            .catch(error => this.error = error);
+    }
+
+    ngOnInit():any {
+        this.getModels();
     }
 }
