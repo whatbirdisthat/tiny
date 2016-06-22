@@ -1,45 +1,23 @@
 import {Component, OnInit} from '@angular/core';
-import {Model} from "./data/DisplayModel";
-import {ModelService} from "./data/ModelService";
 
 @Component({
     selector: 'app',
-    templateUrl: 'app/app.html',
-    providers: [ModelService]
+    templateUrl: 'app/app.html'
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
 
     homeLink:string;
     name1:string;
     name2:string;
     someText:string[];
-    displayModels:Model[];
 
     error:any;
 
-    constructor(private modelService: ModelService) {
+    constructor() {
         this.homeLink = "HOME";
         this.name1 = 'Angle ONE';
         this.name2 = 'Angle TWO';
         this.someText = ['some text', 'some more text'];
     }
 
-    getModels() {
-
-        console.log('********* GETTING THE MODEL ***********');
-
-        return this.modelService
-            .getModels()
-            .then(models => this.displayModels = models)
-            .catch(error => this.error = error);
-
-        // return this.modelService
-        //     .getModels()
-        //     .then(models => this.displayModels = models)
-        //     .catch(error => this.error = error);
-    }
-
-    ngOnInit():any {
-        this.getModels();
-    }
 }
