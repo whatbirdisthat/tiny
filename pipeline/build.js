@@ -7,8 +7,8 @@ gulp.task(Tasks.build, BuildChain, function () {
 });
 
 gulp.task(Tasks.watch, BuildChain, function () {
-    gulp.watch('src/js/**/*.js', ['js']);
-    gulp.watch('src/app/**/*.ts', ['ts']);
-    gulp.watch('src/styles/**/*.scss', ['styles']);
-    gulp.watch('src/**/*.html', ['html']);
+    gulp.watch('src/js/**/*.js', [Tasks.js]);
+    gulp.watch('src/app/**/*.ts', [Tasks.ts]);
+    gulp.watch('src/styles/**/*.scss', [Tasks.css]);
+    gulp.watch('src/**/*.html', [Tasks.html]);
 });

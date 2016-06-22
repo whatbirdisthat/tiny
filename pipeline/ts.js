@@ -1,28 +1,21 @@
-const gulp = require("gulp");
-const del = require("del");
-const sourcemaps = require('gulp-sourcemaps');
-const tslint = require('gulp-tslint');
-var gutil = require('gulp-util');
-var fs = require('fs');
+import { Tasks } from './pipeline';
+import gulp from 'gulp';
 
-var browserify = require("browserify");
-var babelify = require("babelify");
-var tsify = require("tsify");
-var source = require("vinyl-source-stream");
+import sourcemaps from 'gulp-sourcemaps';
 
-const tsc = require("gulp-typescript");
-const tsProject = tsc.createProject("tsconfig.json");
+import tslint from 'gulp-tslint';
+import gutil from 'gulp-util';
+import fs from 'fs';
 
-//"tslint"
-//["tslib", "copy-systemjs-config"],
-gulp.task("ts", () => {
+import browserify  from "browserify";
+import babelify  from "babelify";
+import tsify  from "tsify";
+import source  from "vinyl-source-stream";
+import uglify  from 'gulp-uglify';
+import buffer  from 'gulp-buffer';
 
-    // let tsResult = gulp.src("src/**/*.ts")
-    //     .pipe(sourcemaps.init())
-    //     .pipe(tsc(tsProject));
-    // return tsResult.js
-    //     .pipe(sourcemaps.write("."))
-    //     .pipe(gulp.dest("dist"));
+
+gulp.task(Tasks.ts, ['tslib'], () => {
 
     return browserify({
         basedir: '.',
@@ -35,11 +28,14 @@ gulp.task("ts", () => {
         .transform(babelify, { extensions: [ '.ts', '.js' ] })
         .bundle()
         .pipe(source('bundle.js'))
+        .pipe(buffer())
+        .pipe(sourcemaps.init())
+        .pipe(uglify())
+        .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest("dist/js"));
 
 
 });
-
 
 gulp.task('tslint', () => {
     return gulp.src("src/**/*.ts")
@@ -50,12 +46,12 @@ gulp.task('tslint', () => {
 gulp.task("tslib", () => {
 
     try {
-        if (fs.statSync("dist/lib/es6-shim/es6-shim.min.js").isFile()) {
+        if (fs.statSync("dist/js/lib/reflect-metadata/Reflect.js").isFile()) {
             gutil.log('to reinstall ts libs, run `gulp clean && gulp build`');
             return;
         }
     } catch (e) {
-        if (e.message != "ENOENT: no such file or directory, stat 'dist/lib/es6-shim/es6-shim.min.js'") {
+        if (e.message != "ENOENT: no such file or directory, stat 'dist/js/lib/reflect-metadata/Reflect.js'") {
             gutil.log(e);
         }
     }
@@ -71,10 +67,6 @@ gulp.task("tslib", () => {
             'zone.js/dist/**',
             // '@angular/**'
         ], {cwd: "node_modules/**"}/* Glob required here. */)
-        .pipe(gulp.dest("dist/lib"));
+        .pipe(gulp.dest("dist/js/lib"));
 
-});
-
-gulp.task('copy-systemjs-config', function () {
-    return gulp.src('src/systemjs.config.js').pipe(gulp.dest('dist/app'))
 });

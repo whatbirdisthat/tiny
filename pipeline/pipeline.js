@@ -56,5 +56,5 @@ var TaskDescriptions = [
 ]
 
 // ts
-export var BuildChain = [Tasks.js, Tasks.css, Tasks.html];
+export var BuildChain = [Tasks.js, Tasks.ts, Tasks.css, Tasks.html];
 
