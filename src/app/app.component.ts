@@ -14,6 +14,7 @@ import { RouterLink, RouterOutlet, RouteConfig, ROUTER_DIRECTIVES } from '@angul
     { path: '/about', component: TheAppComponent, name: 'About' }
 ])
 
+
 export class TheAppComponent {
     name1: string;
     name2: string;
