@@ -9,6 +9,7 @@ import {ModelService} from "./data/ModelService";
 })
 
 export class AppComponent implements OnInit {
+
     homeLink:string;
     name1:string;
     name2:string;
@@ -25,10 +26,15 @@ export class AppComponent implements OnInit {
     }
 
     getModels() {
-        this.modelService
-            .getModels()
-            .then(models => this.displayModels = models)
-            .catch(error => this.error = error);
+
+        console.log('********* GETTING THE MODEL ***********');
+        this.displayModels = this.modelService.getModels();
+
+        // this.displayModels = this.modelService.getModels();
+        // return this.modelService
+        //     .getModels()
+        //     .then(models => this.displayModels = models)
+        //     .catch(error => this.error = error);
     }
 
     ngOnInit():any {
