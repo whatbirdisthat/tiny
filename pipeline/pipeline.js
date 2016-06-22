@@ -37,7 +37,7 @@ export function handleError(theError) {
 
 export var Paths = {
     json: [
-        'test/**/*.json'
+        'src/test/**/*.json'
     ],
     html: [
         'src/**/*.html'
