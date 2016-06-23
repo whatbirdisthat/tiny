@@ -13,11 +13,12 @@ export class Description {
 }
 
 export class Model {
+    id:number;
     name:string;
     image2d:string;
     image3d:string;
     description:Description;
-
+active:any;
     constructor(name:string, image2d:string, image3d:string, description:Description) {
         this.name = name;
         this.image2d = image2d;
