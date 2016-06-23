@@ -18,7 +18,7 @@ export const MODELS : Model[] = [
     {
         id: 1,
         name: "Product2",
-        image2d: "P_ONE.svg",
+        image2d: "P_TWO.svg",
         image3d: "P_ONE.svg",
         description: {
             title: "Product Two",
@@ -31,7 +31,7 @@ export const MODELS : Model[] = [
     {
         id: 2,
         name: "Product3",
-        image2d: "P_ONE.svg",
+        image2d: "P_THREE.svg",
         image3d: "P_ONE.svg",
         description: {
             title: "Product Three",
