@@ -17,3 +17,9 @@ import bodyColour from './bodyColour';
 
 bodyColour('#fa903d');
 console.log("ASGADSG");
+
+
+import CubePlotter from "./CubePlotter";
+CubePlotter("WebGL-output-0", 0.01, true, false);
+CubePlotter("WebGL-output-1", 0.05, false, true, 0.01);
+CubePlotter("WebGL-output-2", 0.15, true, true, 0.5);

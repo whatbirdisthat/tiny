@@ -2,12 +2,14 @@
 
 An unimpressive demo of modern front end tek.
 
+Use `npm start` to fire up the BrowserSync and gulp watcher.
+
 # Languages
 * [HTML5](https://www.w3.org/TR/html5/) ✓
 * [CSS3](https://www.w3.org/TR/css-syntax-3/) ✓
     * [SASS](http://sass-lang.com/documentation/frames.html#!file.SASS_REFERENCE.html) ✓
 * [Javascript ES6](http://www.ecma-international.org/publications/standards/Ecma-262.htm) ✓
-    * [Typescript](https://www.typescriptlang.org/)
+    * [Typescript](https://www.typescriptlang.org/) ✓
 
 # Package Managers
 * [NPM](https://www.npmjs.com/) ✓
@@ -16,17 +18,13 @@ An unimpressive demo of modern front end tek.
 # Bundlers
 * [Gulp](https://github.com/gulpjs/gulp) ✓
     * [Browserify](http://browserify.org/) ✓
-        * [Watchify](https://github.com/substack/watchify) ✓
+        * ~~_[Watchify](https://github.com/substack/watchify) ✓_~~
         * [HTMLmin](https://github.com/jonschlinkert/gulp-htmlmin) ✓
     * ~~System.js~~
     * ~~Webpack~~
 
-### Some good gulp plugins to remember:
-* `gulp-add-src` will add inject src streams into the pipe
-* `merge2` will merge streams (adding the arrays together)
-
 # Frameworks
-* [Angular2](https://angular.io/)
+* [Angular2](https://angular.io/) ✓
 
         # Install typings:
         typings install -–global -–save dt~core-js
@@ -35,7 +33,7 @@ An unimpressive demo of modern front end tek.
 * [Bootstrap4](http://getbootstrap.com/) ✓
 * [ng2-bootstrap](https://github.com/valor-software/ng2-bootstrap)
 * [jQuery](https://jquery.com/) ✓
-* [three.js](http://threejs.org/)
+* [three.js](http://threejs.org/) ✓
 
 # Packages
 * [Modernizr](https://modernizr.com/)

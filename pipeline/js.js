@@ -1,6 +1,6 @@
 "use strict";
 
-import {Tasks, handleError} from './pipeline';
+import {Tasks, Paths, handleError} from './pipeline';
 
 import gulp from 'gulp';
 import fs from 'fs';
@@ -17,16 +17,22 @@ import concat from 'gulp-concat';
 
 gulp.task('libs', function () {
 
-    // var jquery_contents = fs.readFileSync('./node_modules/jquery/dist/jquery.js', 'utf8');
-    var tether_contents = fs.readFileSync('./node_modules/tether/dist/js/tether.js', 'utf8');
-    var bootstrap_contents = fs.readFileSync('./node_modules/bootstrap/dist/js/bootstrap.js', 'utf8');
+    try {
+        if (fs.statSync("dist/js/lib/lib.js").isFile()) {
+            gutil.log('to reinstall ts libs, run `gulp clean && gulp build`');
+            return;
+        }
+    } catch (e) {
+        if (e.message != "ENOENT: no such file or directory, stat 'dist/js/lib/lib.js'") {
+            gutil.log(e);
+        }
+    }
 
     return gulp.src('./node_modules/jquery/dist/jquery.js')
         .pipe(insert.transform(function(contents, file) {
-            return contents + tether_contents;
-        }))
-        .pipe(insert.transform(function(contents, file) {
-            return contents + bootstrap_contents;
+            var outputJs = contents;
+            Paths.jsLibs.forEach(eachFile => outputJs += fs.readFileSync(eachFile));
+            return outputJs;
         }))
         .pipe(uglify())
         .pipe(concat('lib.js'))
@@ -55,7 +61,7 @@ gulp.task('app', ['libs'], function () {
         .pipe(sourcemaps.write('.'))
         .pipe(gulp.dest('dist/js'));
 
-})
+});
 
 gulp.task(Tasks.js, ['app'], function () {
     gutil.log('Javascripts complete.')
