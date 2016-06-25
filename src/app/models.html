@@ -11,19 +11,26 @@
                 class="{{model.active}}"></li>
     </ol>
 
-    <div class="carousel-inner" role="listbox" >
+    <div class="carousel-inner" role="listbox">
 
         <div
                 class="carousel-item {{model.active}}"
                 template="ngFor #model of displayModels">
 
 
-                <div id="WebGL-output-{{model.id}}"></div>
+            <div id="WebGL-output-{{model.id}}"></div>
             <div class="container">
                 <div class="carousel-caption text-xs-left">
                     <h1>{{ model.description.title }}</h1>
                     <p>{{ model.description.byline }}</p>
-                    <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
+                    <p>
+                        <a
+                                class="btn btn-lg btn-primary"
+                                href="#"
+                                role="button"
+                                [style.background-image]="'url(svg/'+model.image2d+')'"
+                        >Sign up today</a>
+                    </p>
                 </div>
                 <!--<img src="svg/{{ model.image2d }}"/>-->
             </div>
