@@ -17,17 +17,39 @@ import concat from 'gulp-concat';
 
 gulp.task('libs', function () {
 
+    try {
+        if (fs.statSync("dist/js/lib/lib.js").isFile()) {
+            gutil.log('to reinstall ts libs, run `gulp clean && gulp build`');
+            return;
+        }
+    } catch (e) {
+        if (e.message != "ENOENT: no such file or directory, stat 'dist/js/lib/lib.js'") {
+            gutil.log(e);
+        }
+    }
+
+    var lib_files = [
+        './node_modules/tether/dist/js/tether.js',
+        './node_modules/bootstrap/dist/js/bootstrap.js',
+        './node_modules/three/build/three.js'
+    ];
+
     // var jquery_contents = fs.readFileSync('./node_modules/jquery/dist/jquery.js', 'utf8');
-    var tether_contents = fs.readFileSync('./node_modules/tether/dist/js/tether.js', 'utf8');
-    var bootstrap_contents = fs.readFileSync('./node_modules/bootstrap/dist/js/bootstrap.js', 'utf8');
+    // var tether_contents = fs.readFileSync('./node_modules/tether/dist/js/tether.js', 'utf8');
+    // var bootstrap_contents = fs.readFileSync('./node_modules/bootstrap/dist/js/bootstrap.js', 'utf8');
 
     return gulp.src('./node_modules/jquery/dist/jquery.js')
         .pipe(insert.transform(function(contents, file) {
-            return contents + tether_contents;
+            var outputJs = contents;
+            lib_files.forEach(eachFile => outputJs += fs.readFileSync(eachFile));
+            return outputJs;
         }))
-        .pipe(insert.transform(function(contents, file) {
-            return contents + bootstrap_contents;
-        }))
+        // .pipe(insert.transform(function(contents, file) {
+        //     return contents + tether_contents;
+        // }))
+        // .pipe(insert.transform(function(contents, file) {
+        //     return contents + bootstrap_contents;
+        // }))
         .pipe(uglify())
         .pipe(concat('lib.js'))
         .pipe(gulp.dest('dist/js/lib'));
