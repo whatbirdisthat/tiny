@@ -11,12 +11,17 @@ export var Paths = {
     html: [
         'src/**/*.html'
     ],
+    jsLibs: [
+        './node_modules/tether/dist/js/tether.js',
+        './node_modules/bootstrap/dist/js/bootstrap.js',
+        './node_modules/three/build/three.js'
+    ],
     tsLibs: [
         'reflect-metadata/Reflect.js',
         'zone.js/dist/**/*.js'
     ],
     dist: 'dist'
-}
+};
 
 export var Tasks = {
     build: 'build',
@@ -28,7 +33,7 @@ export var Tasks = {
     svg: 'svg',
     ts: 'ts',
     watch: 'watch'
-}
+};
 
 var TaskDescriptions = [
     {name: Tasks.build, text: "The BUILD task. This builds everything."},
@@ -40,7 +45,7 @@ var TaskDescriptions = [
     {name: Tasks.svg, text: "Builds the SVG from sources."},
     {name: Tasks.ts, text: "Builds the TS from sources."},
     {name: Tasks.watch, text: "Watches js/css/html files and rebuilds on change."}
-]
+];
 
 export var BuildChain = [Tasks.ts, Tasks.js, Tasks.svg, Tasks.css, Tasks.html, Tasks.json];
 
@@ -70,7 +75,7 @@ gulp.task('show-help', function () {
     }
     console.log('\n');
 
-})
+});
 
 export function handleError(theError) {
     // gutil.log(theError);
