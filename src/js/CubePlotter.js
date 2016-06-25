@@ -1,4 +1,16 @@
-import THREE from "three";
+// import THREE from "three";
+
+
+function getAllEvents(element) {
+    var result = [];
+    for (var key in element) {
+        if (key.indexOf('on') === 0) {
+            result.push(key.slice(2));
+        }
+    }
+    return result.join(' ');
+}
+
 export default function CubePlotter(elementId, rotationSpeed, addCube, addSphere, bouncingSpeed) {
     setTimeout(function () {
         "use strict";
@@ -12,7 +24,9 @@ export default function CubePlotter(elementId, rotationSpeed, addCube, addSphere
 // create a camera, which defines where we're looking at.
 //     var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
 
-            var WIDTH = 600, HEIGHT = 200;
+            var myElement = document.getElementById(elementId);
+            var WIDTH = myElement.parentElement.parentElement.clientWidth || 200;
+            var HEIGHT = myElement.parentElement.parentElement.clientHeight || 200;
 
             var camera = new THREE.PerspectiveCamera(45, WIDTH / HEIGHT, 0.1, 1000);
 
@@ -79,7 +93,7 @@ export default function CubePlotter(elementId, rotationSpeed, addCube, addSphere
             camera.lookAt(scene.position);
 
 // add the output of the renderer to the html element
-            document.getElementById(elementId).appendChild(renderer.domElement);
+            myElement.appendChild(renderer.domElement);
 
 // render the scene
 //             renderer.render(scene, camera);

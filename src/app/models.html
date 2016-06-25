@@ -2,6 +2,7 @@
 ================================================== -->
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="2200">
     <!-- Indicators -->
+
     <ol class="carousel-indicators">
         <li
                 template="ngFor #model of displayModels; #i = index"
@@ -19,10 +20,7 @@
 
                 <div id="WebGL-output-{{model.id}}"></div>
             <div class="container">
-                <div
-                        class="carousel-caption text-xs-left"
-                        style="background-image: url(svg/{{model.image2d}});"
-                >
+                <div class="carousel-caption text-xs-left">
                     <h1>{{ model.description.title }}</h1>
                     <p>{{ model.description.byline }}</p>
                     <p><a class="btn btn-lg btn-primary" href="#" role="button">Sign up today</a></p>
