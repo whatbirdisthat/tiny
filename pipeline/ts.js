@@ -1,4 +1,4 @@
-import {Tasks, Paths} from './pipeline';
+import {Tasks, Paths, handleError} from './pipeline';
 import gulp from 'gulp';
 import del from "del";
 import sourcemaps from 'gulp-sourcemaps';
@@ -11,16 +11,10 @@ import tsify  from "tsify";
 import source  from "vinyl-source-stream";
 import uglify  from 'gulp-uglify';
 import buffer  from 'gulp-buffer';
-import {handleError} from './pipeline';
-import jsmin from 'gulp-jsmin';
+// import jsmin from 'gulp-jsmin';
 
 gulp.task(Tasks.ts, ['tslib'], () => {
-//    ['systemjs'],
-    // return gulp.src('src/app/**/*.ts')
-    //     .pipe(gulp.dest('dist/app'));
 
-
-//['tslib'],
     return browserify({
         basedir: '.',
         debug: true,
@@ -38,17 +32,17 @@ gulp.task(Tasks.ts, ['tslib'], () => {
         .pipe(sourcemaps.init())
         // .pipe(uglify())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest("dist/js"));
+        .pipe(gulp.dest(Paths.jsDest));
 
 
 });
 
 gulp.task('systemjs', function () {
 
-    return gulp.src('src/systemjs.config.js')
+    return gulp.src(Paths.systemjs)
         .pipe(gulp.dest('dist'));
 
-})
+});
 
 gulp.task('tslint', () => {
     return gulp.src("src/**/*.ts")

@@ -15,15 +15,15 @@ import gutil from 'gulp-util';
 import insert from 'gulp-insert';
 import concat from 'gulp-concat';
 
-gulp.task('libs', function () {
+gulp.task('jslibs', function () {
 
     try {
-        if (fs.statSync("dist/js/lib/lib.js").isFile()) {
+        if (fs.statSync(Paths.jsLibOut).isFile()) {
             gutil.log('to reinstall ts libs, run `gulp clean && gulp build`');
             return;
         }
     } catch (e) {
-        if (e.message != "ENOENT: no such file or directory, stat 'dist/js/lib/lib.js'") {
+        if (e.message != "ENOENT: no such file or directory, stat '" + Paths.jsLibOut + "'") {
             gutil.log(e);
         }
     }
@@ -35,17 +35,17 @@ gulp.task('libs', function () {
             return outputJs;
         }))
         .pipe(uglify())
-        .pipe(concat('lib.js'))
-        .pipe(gulp.dest('dist/js/lib'));
+        .pipe(concat(Paths.jsLibFile))
+        .pipe(gulp.dest(Paths.jsLibDest));
 
 });
 
-gulp.task('app', ['libs'], function () {
+gulp.task('app', ['jslibs'], function () {
     var b = browserify({
         entries: [
             './src/js/main.js'
         ],
-        debug: true, // injects source map into bundle.js
+        debug: true,
         cache: {},
         packageCache: {}
     });
@@ -54,19 +54,19 @@ gulp.task('app', ['libs'], function () {
         .on('error', handleError)
         .bundle()
         .on('error', handleError)
-        .pipe(source('scripts.js'))
+        .pipe(source(Paths.jsOutFile))
         .pipe(buffer())
-        .pipe(sourcemaps.init({loadMaps: true})) // loads map from browserify file
+        .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(uglify())
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest('dist/js'));
+        .pipe(gulp.dest(Paths.jsDest));
 
 });
 
 gulp.task(Tasks.js, ['app'], function () {
-    gutil.log('Javascripts complete.')
+    //gutil.log('Javascripts complete.')
 });
 
 gulp.task('jsclean', function (call_back) {
-    return del('dist/lib/lib.js', call_back);
+    return del(Paths.jsLibDest, call_back);
 });

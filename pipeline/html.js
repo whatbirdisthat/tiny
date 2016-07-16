@@ -4,7 +4,7 @@ import gulp from 'gulp';
 import htmlmin from 'gulp-htmlmin';
 
 gulp.task(Tasks.html, function () {
-    return gulp.src(Paths.html)
+    return gulp.src(Paths.htmlSources)
         .pipe(htmlmin({collapseWhitespace: true}))
-        .pipe(gulp.dest('dist'));
+        .pipe(gulp.dest(Paths.distRoot));
 });

@@ -1,26 +1,45 @@
 import gulp from 'gulp'
 
 export var Paths = {
+    distRoot: 'dist',
+
+    cssSources: [
+        'node_modules/tether/src/css/tether.sass',
+        'node_modules/bootstrap/scss/bootstrap.scss',
+        'src/styles/styles.scss'
+    ],
+    cssOutFolder: 'dist/css',
+    cssOutFile: 'styles.css',
+
+    htmlSources: [
+        'src/**/*.html'
+    ],
+
     json: [
         'src/**/*.json',
         // 'src/test/**/*.json'
     ],
-    js: [
+    systemjs: [
         'src/systemjs.config.js'
     ],
-    html: [
-        'src/**/*.html'
-    ],
+    jsOutFile: 'scripts.js',
+    jsDest: 'dist/js',
     jsLibs: [
         './node_modules/tether/dist/js/tether.js',
         './node_modules/bootstrap/dist/js/bootstrap.js',
         './node_modules/three/build/three.js'
     ],
+    jsLibFile: 'lib.js',
+    jsLibDest: 'dist/js/lib',
+    jsLibOut: 'dist/js/lib/lib.js',
+
     tsLibs: [
         'reflect-metadata/Reflect.js',
         'zone.js/dist/**/*.js'
     ],
-    dist: 'dist'
+
+    svgSources: 'src/svg/**/*.svg',
+    svgOut: 'dist/svg'
 };
 
 export var Tasks = {
@@ -47,6 +66,16 @@ var TaskDescriptions = [
     {name: Tasks.watch, text: "Watches js/css/html files and rebuilds on change."}
 ];
 
+export var WatchMap = [
+    {path: 'src/svg/**/*.svg', tasks: [Tasks.svg]},
+    {path: 'src/**/*.js', tasks: [Tasks.js]},
+    {path: 'test/**/*.json', tasks: [Tasks.json]},
+    {path: 'src/app/**/*.ts', tasks: [Tasks.ts]},
+    {path: 'src/styles/**/*.scss', tasks: [Tasks.css]},
+    {path: 'src/**/*.html', tasks: [Tasks.html]}
+];
+
+
 export var BuildChain = [Tasks.ts, Tasks.js, Tasks.svg, Tasks.css, Tasks.html, Tasks.json];
 
 gulp.task('show-help', function () {
@@ -64,8 +93,7 @@ gulp.task('show-help', function () {
         });
         console.log(
             String.fromCharCode(0x1B) + "[33m  "
-            +
-            eachTask
+            + eachTask
             + String.fromCharCode(0x1B) + "[0m\n"
             + ' '
             + String.fromCharCode(0x1B) + "[34m    "
